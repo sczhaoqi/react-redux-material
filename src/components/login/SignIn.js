@@ -12,6 +12,7 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
   main: {
@@ -45,49 +46,57 @@ const styles = theme => ({
   },
 });
 
-function SignIn(props) {
-  const { classes } = props;
-
-  return (
-    <main className={classes.main}>
-      <CssBaseline />
-      <Paper className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form}>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
-          </FormControl>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+class SignIn extends React.Component {
+  constructor(props) {
+    super(props)
+    this.classes = this.props.classes
+    this.toLogin = this.toLogin.bind(this)
+  }
+  toLogin(){
+    this.props.history.push("/login")
+  }
+  render() {
+    return (
+      <main className={this.classes.main}>
+        <CssBaseline />
+        <Paper className={this.classes.paper}>
+          <Avatar className={this.classes.avatar}>
+            <LockIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
             Sign in
+        </Typography>
+          <form className={this.classes.form} onSubmit={this.toLogin}>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="email">Email Address</InputLabel>
+              <Input id="email" name="email" autoComplete="email" autoFocus />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <Input name="password" type="password" id="password" autoComplete="current-password" />
+            </FormControl>
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={this.classes.submit}
+            >
+              Sign in
           </Button>
-        </form>
-      </Paper>
-    </main>
-  );
+          </form>
+        </Paper>
+      </main>
+    );
+  }
 }
 
 SignIn.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SignIn);
+export default withStyles(styles)(SignIn);withRouter(SignIn);
